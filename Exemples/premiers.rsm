@@ -1,0 +1,63 @@
+set 0 10
+set 1 32
+
+;2:max
+;3:est_premier
+;4:n
+;8:k
+
+;cases_de_copie:5,6
+
+PRINTSTRING \Jusqu'ou voulez-vous que l'on detecte les nombres premiers ? Entrez un nombre a 3 chiffres entre 0 et 255 (du type 006, 041, 150, ...) : \ 20
+inputnum 2 -
+
+
+
+set 3 0
+
+decr 2 1 ;max-1_car_la_boucle_commence_a_2
+
+set 4 2 ;n=2
+
+
+WHILE 0 1 2 - -
+
+    set 3 1 ;est_premier=true
+    
+    ;copie_de_n_pour_faire_un_variant
+    set 5 4
+    set 6 7
+    cop 5 6
+    ;on_a_n_dans_7
+    decr 7 2 ;n-2
+    set 8 2
+    WHILE 2 3 7 - -
+        ;copie_de_n_pour_un_calcul
+        set 5 4
+        set 6 9
+        cop 5 6
+        ;on_a_n_dans_9
+        mod 9 8
+        set 10 0
+        eq 9 10
+        jump 9 5
+            set 3 0 ;est_premier=False
+            goto 3 - ;sort_de_la_boucle
+        label 5 -
+        
+        incr 8 1
+        decr 7 1
+    ENDWHILE 2 3
+    
+    
+    jump 3 4
+        printnum 4 -
+        print 1 -
+    label 4 -
+    
+    incr 4 1
+    decr 2 1
+ENDWHILE 0 1
+
+print 0 -
+

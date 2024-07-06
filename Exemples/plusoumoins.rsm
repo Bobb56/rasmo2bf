@@ -1,0 +1,142 @@
+;labels utilises 0,1,2,3,4,5,6,7,8,9,10
+
+
+; 0 : nombre a chercher
+; 2 : nombre essais
+; 3 : espace
+; 4 : retour a la ligne
+; 5 : booleen quitter
+; 6 : entree
+
+
+;texte d accueil
+
+
+set 3 32 ;espace
+set 4 10 ;retour a la ligne
+
+define entree 4
+define random 9
+
+
+
+
+; on stocke 20 valeurs dans les cases 20 -> 40
+set 20 241
+set 21 159
+set 22 156
+set 23 1
+set 24 39
+set 25 195
+set 26 215
+set 27 97
+set 28 194
+set 29 124
+set 30 106
+set 31 149
+set 32 182
+set 33 229
+set 34 180
+set 35 187
+set 36 97
+set 37 132
+set 38 217
+set 39 128
+
+
+set 14 20 ; compteur global qui compte le nombre d'appels à random on fait
+; fonction qui renvoie les nombres "alétoires"
+FUNCTIONDEF random 10
+    set 15 16
+    cop 14 15 ; maintenant le nombre est dans la case 16
+    push 16 -
+    incr 14 1
+FUNCTIONEND 10 -
+
+
+
+PRINTSTRING \Bonjour, nous avons choisi un nombre entre 0 et 255, essayez de le deviner.\ 1
+
+print entree -
+
+label 7 - ;debut
+
+set 1 255
+
+
+; récupération du nombre aléatoire
+call random -
+pop 0 -
+
+
+set 2 0
+
+
+
+set 5 1 ;quitter
+
+WHILE 2 3 5 - -
+    PRINTSTRING \Nombre : \ 1
+    
+    set 6 0
+    inputnum 6 -
+    
+    incr 2 1 ;nombre essais
+    
+    
+    set 7 6 ;on va copier 6 dans 9,10,11
+    set 8 9 ;cree la variable de sortie
+    cop 7 8 ;premiere copie
+    incr 8 1
+    cop 7 8 ;deuxieme copie
+    incr 8 1
+    cop 7 8 ;troisieme copie
+    
+    ;nombre trop grand
+    gt 9 0
+    jump 9 4
+        PRINTSTRING Moins 1
+        print 4 -
+    label 4 -
+    
+    
+    ;nombre trop petit
+    lt 10 0
+    jump 10 5
+        PRINTSTRING Plus 1
+        print 4 -
+    label 5 -
+    
+    
+    ;nombre egal
+    eq 11 0
+    jump 11 6
+        PRINTSTRING \Bravo, tu as trouve !\ 1
+        print 4 -
+        
+        PRINTSTRING \Nombre d'essais : \ 1
+
+        printnum 2 -
+        
+        print 4 -
+        
+        ;voulez vous rejouer
+        PRINTSTRING \Voulez-vous rejouer ? (o/n) \ 1
+        
+        input 12 1
+        
+        set 13 111 ;on met o dans la case 13
+        eq 12 13
+        jump 12 8 ;if
+            PRINTSTRING \C'est reparti !\ 1
+            print 4 -
+            goto 7 -
+        label 8 - ;else
+            set 5 0
+        
+        
+    label 6 -
+    
+
+ENDWHILE 2 3
+

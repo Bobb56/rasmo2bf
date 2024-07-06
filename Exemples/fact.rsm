@@ -1,0 +1,63 @@
+define espace 0
+define entree 1
+
+define cg 12
+define cd 13
+
+define boucle 3
+define i 3
+
+set espace 32 ; espace
+set entree 10 ; retour a la ligne
+    ; case 2 pour les printstring
+
+define  fact 1
+FUNCTIONDEF  fact 0 ; memoire utilisee : 10,11,12,13
+    define arg 10
+    pop arg -
+    define un 11
+    set un 1
+    gte un arg
+    jump un 2 ; 0 ou 1
+        set un 1
+        push un -
+        return - -
+    label 2 - ; le calcul
+        set un 1
+        set cg 10
+        set cd 12
+        cop cg cd
+        ; 12 contient x
+        sub cg un ; 12 contient x - 1
+        push arg - ; la pile contient x
+        push cg -
+        call  fact -
+        pop cg -
+        pop arg -
+        mul arg cg
+        push arg -
+        return - -
+FUNCTIONEND 0 -
+
+
+
+define  message 5
+FUNCTIONDEF  message 4
+    PRINTSTRING \Votre nombre ? \ 2
+FUNCTIONEND 4 -
+
+
+
+label boucle -
+
+    call  message -
+    
+    inputnum i -
+
+    push i -
+    call  fact -
+    pop i -
+    printnum i -
+    print entree -
+
+goto boucle -
